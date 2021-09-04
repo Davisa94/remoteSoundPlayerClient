@@ -16,15 +16,13 @@ public class CPHInline
    public bool Execute()
    {
       var postValues = new NameValueCollection();
-      CPH.SendWhisper("melonlore", "TestWhisper");
       foreach (var arg in args)
       {
-         CPH.SendWhisper("melonlore", $"LogVars :: {arg.Key} = {arg.Value}");
-         CPH.LogInfo($"LogVars :: {arg.Key} = {arg.Value}");
          CPH.LogInfo($"LogVars :: {arg.Key} = {arg.Value}");
          if (arg.Key == "rawInput")
          {
-            postValues[$"{arg.Key}"] = $"{arg.Value}";
+            // TODO: Change this to remove extra qoute once it is removed in the server
+            postValues[$"{arg.Key}"] = $"\"{arg.Value}\"";
             CPH.SendMessage($"{arg.Value}");
          }
       }
