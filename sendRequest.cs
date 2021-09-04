@@ -4,16 +4,16 @@ using System.Collections.Generic;
 
 public class CPHInline
 {
-	async private void SendRequest(Dictionary<string,string> postData)
+	private static async void SendRequest(Dictionary<string,string> postData)
 	{
       //send the request off
-      var content = new FormUrlEncodedContent(postValues);
+      var content = new FormUrlEncodedContent(postData);
       var response = await client.PostAsync(targetURL, content);
       var responseString = await response.Content.ReadAsStringAsync();
 	}
    private static readonly HttpClient client = new HttpClient();
    private static readonly String targetURL = "localhost:8080";
-   async public bool Execute()
+   public bool Execute()
    {
       var postValues = new Dictionary<string, string> {};
       CPH.SendWhisper("melonlore", "TestWhisper");
@@ -28,6 +28,8 @@ public class CPHInline
             CPH.SendMessage($"{arg.Value}");
          }
       }
+		var task = SendRequest(postValues);
+		var result = task.WaitAndUnwrapException();
 
       return true;
    }
