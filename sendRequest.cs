@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class CPHInline
 {
-	private static async void SendRequest(Dictionary<string,string> postData)
+	private static async Task SendRequest(Dictionary<string,string> postData)
 	{
       //send the request off
       var content = new FormUrlEncodedContent(postData);
