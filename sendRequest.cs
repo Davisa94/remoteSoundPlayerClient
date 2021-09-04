@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class CPHInline
 {
-	private static async Task SendRequest(Dictionary<string,string> postData)
+	private static async void SendRequest(Dictionary<string,string> postData)
 	{
       //send the request off
       var content = new FormUrlEncodedContent(postData);
@@ -13,7 +13,7 @@ public class CPHInline
 	}
    private static readonly HttpClient client = new HttpClient();
    private static readonly String targetURL = "localhost:8080";
-   public bool Execute()
+   public static async void Execute()
    {
       var postValues = new Dictionary<string, string> {};
       CPH.SendWhisper("melonlore", "TestWhisper");
@@ -28,8 +28,8 @@ public class CPHInline
             CPH.SendMessage($"{arg.Value}");
          }
       }
-		var task = SendRequest(postValues);
-		var result = task.WaitAndUnwrapException();
+		// var task = SendRequest(postValues);
+		var result = AsyncContext.RunTask(SendRequest, postValues);
 
       return true;
    }
